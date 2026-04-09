@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import ru.mtuci.coursemanagement.model.Course;
 import ru.mtuci.coursemanagement.repository.CourseRepository;
-import ru.mtuci.coursemanagement.service.CourseService;
 
+import java.net.URI;
 import java.util.List;
 
 @Slf4j
@@ -75,10 +75,20 @@ public class CourseController {
 
     @GetMapping("/api/courses/import")
     @ResponseBody
-    public String importFromUrl(@RequestParam String url) {
-        RestTemplate rt = new RestTemplate();
-        String json = rt.getForObject(url, String.class);
-        log.info("Импортированы данные курсов (raw): {}", json);
-        return "OK";
+    public ResponseEntity<String> importFromUrl(@RequestParam String url) {
+        try {
+            URI uri = URI.create(url);
+            String host = uri.getHost();
+            List<String> allowedHosts = List.of("api.example.com", "data.example.com");
+            if (host == null || !allowedHosts.contains(host)) {
+                return ResponseEntity.badRequest().body("Host not allowed");
+            }
+            RestTemplate rt = new RestTemplate();
+            String json = rt.getForObject(url, String.class);
+            log.info("Импортированы данные курсов");
+            return ResponseEntity.ok("OK");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Invalid URL");
+        }
     }
 }
