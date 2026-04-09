@@ -1,5 +1,4 @@
 package ru.mtuci.coursemanagement.controller;
-import ru.mtuci.coursemanagement.plugin.PluginLoader;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -13,7 +12,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(Model model) {
-        loader.tryload();
+        loader.tryLoad();
         return "index";
     }
 }
