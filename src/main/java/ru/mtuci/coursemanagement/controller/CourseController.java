@@ -17,11 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import ru.mtuci.coursemanagement.model.Course;
 import ru.mtuci.coursemanagement.repository.CourseRepository;
-import ru.mtuci.coursemanagement.service.CourseService;
-import org.springframework.http.ResponseEntity;
-import java.net.URI;
-import java.util.List;
 
+import java.net.URI;
 import java.util.List;
 
 @Slf4j
